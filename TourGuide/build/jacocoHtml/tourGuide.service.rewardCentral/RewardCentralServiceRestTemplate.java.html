@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RewardCentralServiceRestTemplate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide.service.rewardCentral</a> &gt; <span class="el_source">RewardCentralServiceRestTemplate.java</span></div><h1>RewardCentralServiceRestTemplate.java</h1><pre class="source lang-java linenums">package tourGuide.service.rewardCentral;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.UUID;
+
+<span class="fc" id="L12">public class RewardCentralServiceRestTemplate implements IRewardCentralService {</span>
+<span class="fc" id="L13">    private final Logger logger = LoggerFactory.getLogger(RewardCentralServiceRestTemplate.class);</span>
+
+    public static final String attractionsRewardsEndpoint = &quot;/rewardsPoints&quot;;
+
+    /**
+     * Get rewards Points for a user visiting an attraction
+     *
+     * @param attractionId attraction id
+     * @param userId       user id
+     * @return number of rewards points
+     */
+    public int getAttractionRewardPoints(UUID attractionId, UUID userId) {
+<span class="fc" id="L25">        logger.debug(&quot;Call to rewardCentral.getAttractionRewardPoints(&quot; + attractionId + &quot;,&quot; + userId + &quot;)&quot;);</span>
+
+<span class="fc" id="L27">        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(defaultRewardsCentralRootUrl + attractionsRewardsEndpoint)</span>
+<span class="fc" id="L28">                .queryParam(&quot;attractionId&quot;, attractionId)</span>
+<span class="fc" id="L29">                .queryParam(&quot;userId&quot;, userId);</span>
+        try {
+<span class="fc" id="L31">            RestTemplate restTemplate = new RestTemplate();</span>
+<span class="fc" id="L32">            ResponseEntity&lt;Integer&gt; responseEntity = restTemplate.getForEntity(uriComponentsBuilder.toUriString(), Integer.class);</span>
+<span class="fc" id="L33">            return responseEntity.getBody();</span>
+<span class="nc" id="L34">        } catch (</span>
+                RestClientException exception) {
+<span class="nc" id="L36">            logger.error(&quot;Exception during rewardCentral.getAttractionRewardPoints : &quot; + exception.getMessage());</span>
+<span class="nc" id="L37">            return Integer.MIN_VALUE;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

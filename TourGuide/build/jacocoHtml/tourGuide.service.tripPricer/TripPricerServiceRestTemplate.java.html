@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TripPricerServiceRestTemplate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide.service.tripPricer</a> &gt; <span class="el_source">TripPricerServiceRestTemplate.java</span></div><h1>TripPricerServiceRestTemplate.java</h1><pre class="source lang-java linenums">package tourGuide.service.tripPricer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+import tourGuide.model.Provider;
+
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * TripPricer Service class
+ */
+<span class="fc" id="L19">public class TripPricerServiceRestTemplate implements ITripPricerService {</span>
+
+<span class="fc" id="L21">    private final Logger logger = LoggerFactory.getLogger(TripPricerServiceRestTemplate.class);</span>
+
+    public static final String priceEndpoint = &quot;/price&quot;;
+
+    public static final String providerNameEndpoint = &quot;/providerName&quot;;
+
+    /**
+     * get provider list of trips with calculated price for given parameters
+     *
+     * @param apiKey        apiKey
+     * @param attractionId  attraction id
+     * @param adults        number of adults
+     * @param children      number of children
+     * @param nightsStay    number of nights stayed
+     * @param rewardsPoints number of rewardsPoints
+     * @return provider list
+     */
+    public List&lt;Provider&gt; getPrice(String apiKey, UUID attractionId, int adults, int children, int nightsStay, int rewardsPoints) {
+<span class="nc" id="L39">        logger.debug(&quot;Call to tripPricer.getPrice&quot;);</span>
+
+<span class="nc" id="L41">        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(defaultTripPricerRootUrl + priceEndpoint)</span>
+<span class="nc" id="L42">                .queryParam(&quot;apiKey&quot;, apiKey)</span>
+<span class="nc" id="L43">                .queryParam(&quot;attractionId&quot;, attractionId)</span>
+<span class="nc" id="L44">                .queryParam(&quot;adults&quot;, adults)</span>
+<span class="nc" id="L45">                .queryParam(&quot;children&quot;, children)</span>
+<span class="nc" id="L46">                .queryParam(&quot;nightsStay&quot;, nightsStay)</span>
+<span class="nc" id="L47">                .queryParam(&quot;rewardsPoints&quot;, rewardsPoints);</span>
+
+        try {
+<span class="nc" id="L50">            RestTemplate restTemplate = new RestTemplate();</span>
+<span class="nc" id="L51">            ResponseEntity&lt;List&lt;Provider&gt;&gt; response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null,</span>
+<span class="nc" id="L52">                    new ParameterizedTypeReference&lt;List&lt;Provider&gt;&gt;() {</span>
+                    });
+<span class="nc" id="L54">            return response.getBody();</span>
+<span class="nc" id="L55">        } catch (</span>
+                RestClientException exception) {
+<span class="nc" id="L57">            logger.error(&quot;Exception during tripPricer.getPrice : &quot; + exception.getMessage());</span>
+<span class="nc" id="L58">            return null;</span>
+        }
+
+    }
+
+    /**
+     * getProvider name
+     *
+     * @param apiKey apiKey
+     * @param adults number of Adults
+     * @return provider name
+     */
+    public String getProviderName(String apiKey, int adults) {
+<span class="nc" id="L71">        logger.debug(&quot;Call to tripPricer.getProviderName&quot;);</span>
+
+<span class="nc" id="L73">        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(defaultTripPricerRootUrl + providerNameEndpoint)</span>
+<span class="nc" id="L74">                .queryParam(&quot;apiKey&quot;, apiKey)</span>
+<span class="nc" id="L75">                .queryParam(&quot;adults&quot;, adults);</span>
+
+        try {
+<span class="nc" id="L78">            RestTemplate restTemplate = new RestTemplate();</span>
+<span class="nc" id="L79">            ResponseEntity&lt;String&gt; response = restTemplate.getForEntity(builder.toUriString(), String.class);</span>
+<span class="nc" id="L80">            return response.getBody();</span>
+<span class="nc" id="L81">        } catch (</span>
+                RestClientException exception) {
+<span class="nc" id="L83">            logger.error(&quot;Exception during tripPricer.getProviderName : &quot; + exception.getMessage());</span>
+<span class="nc" id="L84">            return null;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

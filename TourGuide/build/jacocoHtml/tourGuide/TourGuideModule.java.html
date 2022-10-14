@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TourGuideModule.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide</a> &gt; <span class="el_source">TourGuideModule.java</span></div><h1>TourGuideModule.java</h1><pre class="source lang-java linenums">package tourGuide;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import tourGuide.service.InitializationService;
+import tourGuide.service.gpsUtil.GpsUtilServiceRestTemplate;
+import tourGuide.service.gpsUtil.IGpsUtilService;
+import tourGuide.service.rewardCentral.IRewardCentralService;
+import tourGuide.service.tripPricer.ITripPricerService;
+import tourGuide.service.rewardCentral.RewardCentralServiceRestTemplate;
+import tourGuide.service.RewardsService;
+import tourGuide.service.TourGuideService;
+import tourGuide.service.tripPricer.TripPricerServiceRestTemplate;
+
+@Configuration
+<span class="nc" id="L16">public class TourGuideModule {</span>
+
+	@Bean
+	public InitializationService getInitializationService()
+	{
+<span class="nc" id="L21">		return new InitializationService();</span>
+	}
+
+
+	@Bean
+	public ITripPricerService getTripPricerService()
+	{
+<span class="nc" id="L28">		return  new TripPricerServiceRestTemplate();</span>
+	}
+
+	@Bean
+	public IGpsUtilService getGpsUtilService() {
+<span class="nc" id="L33">		return new GpsUtilServiceRestTemplate();</span>
+	}
+
+	@Bean
+	public IRewardCentralService getRewardCentralService() {
+<span class="nc" id="L38">		return new RewardCentralServiceRestTemplate();</span>
+	}
+
+
+	@Bean
+	public RewardsService getRewardsService() {
+<span class="nc" id="L44">		return new RewardsService(getGpsUtilService(), getRewardCentralService());</span>
+	}
+
+
+	@Bean
+	public TourGuideService getTourGuideService()
+	{
+<span class="nc" id="L51">		return new TourGuideService(getGpsUtilService(),getRewardsService(), getTripPricerService(), getInitializationService());</span>
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

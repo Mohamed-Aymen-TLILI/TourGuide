@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RewardsService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide.service</a> &gt; <span class="el_source">RewardsService.java</span></div><h1>RewardsService.java</h1><pre class="source lang-java linenums">package tourGuide.service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import tourGuide.model.AttractionTourGuide;
+import tourGuide.model.LocationTourGuide;
+import tourGuide.model.VisitedLocationTourGuide;
+import tourGuide.service.gpsUtil.IGpsUtilService;
+import tourGuide.service.rewardCentral.IRewardCentralService;
+import tourGuide.user.User;
+import tourGuide.user.UserReward;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * Rewards Service
+ */
+public class RewardsService {
+
+<span class="fc" id="L25">	private final Logger logger = LoggerFactory.getLogger(RewardsService.class);</span>
+
+	private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
+
+	// proximity in miles
+	private static final int DEFAULT_PROXIMITY_BUFFER = 10000;
+<span class="fc" id="L31">	private int proximityBuffer = DEFAULT_PROXIMITY_BUFFER;</span>
+	private static final int ATTRACTION_PROXIMITY_RANGE = 200;
+	private final IGpsUtilService gpsUtilService;
+	private final IRewardCentralService rewardCentralService;
+
+	/**
+	 * Constructor with necessary services
+	 *
+	 * @param gpsUtilService       gpsUtilService
+	 * @param rewardCentralService rewardCentralService
+	 */
+<span class="fc" id="L42">	public RewardsService(IGpsUtilService gpsUtilService, IRewardCentralService rewardCentralService) {</span>
+<span class="fc" id="L43">		this.gpsUtilService = gpsUtilService;</span>
+<span class="fc" id="L44">		this.rewardCentralService = rewardCentralService;</span>
+<span class="fc" id="L45">	}</span>
+
+	/**
+	 * Set proximity Buffer
+	 *
+	 * @param proximityBuffer proximity Buffer to set
+	 */
+	public void setProximityBuffer(int proximityBuffer) {
+<span class="nc" id="L53">		this.proximityBuffer = proximityBuffer;</span>
+<span class="nc" id="L54">	}</span>
+
+	/**
+	 * Method to set Proximity Buffer to default value
+	 */
+	public void setDefaultProximityBuffer() {
+<span class="nc" id="L60">		proximityBuffer = DEFAULT_PROXIMITY_BUFFER;</span>
+<span class="nc" id="L61">	}</span>
+
+	/**
+	 * Calculate rewards for user
+	 *
+	 * @param user user
+	 */
+	public void calculateRewards(User user) {
+
+		//copy list of userLocations to avoid change of elements in this list during iterations on the list
+<span class="fc" id="L71">		List&lt;VisitedLocationTourGuide&gt; userLocationsCopied = new CopyOnWriteArrayList&lt;&gt;(user.getVisitedLocations());</span>
+
+<span class="fc" id="L73">		List&lt;AttractionTourGuide&gt; attractionTourGuides = new CopyOnWriteArrayList&lt;&gt;(gpsUtilService.getAttractions());</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (attractionTourGuides != null) {</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">			for (VisitedLocationTourGuide visitedLocation : userLocationsCopied) {</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">				for (AttractionTourGuide attraction : attractionTourGuides) {</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">					if (user.getUserRewards().stream().noneMatch(reward -&gt; reward.getAttractionTourGuide().getAttractionName().equals(attraction.getAttractionName()))) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">						if (nearAttraction(visitedLocation, attraction)) {</span>
+<span class="fc" id="L79">							user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user.getUserId())));</span>
+						}
+					}
+<span class="fc" id="L82">				}</span>
+<span class="fc" id="L83">			}</span>
+		}
+<span class="fc" id="L85">	}</span>
+
+	/**
+	 * Calculate rewards for user list
+	 *
+	 * @param userList user List
+	 */
+	public void calculateRewardsForUserList(List&lt;User&gt; userList) {
+<span class="fc" id="L93">		logger.debug(&quot;Calculate Rewards for user list : nbUsers = &quot; + userList.size());</span>
+
+<span class="fc" id="L95">		ExecutorService rewardsExecutorService = Executors.newFixedThreadPool(1500);</span>
+
+<span class="fc" id="L97">		userList.stream().forEach(user -&gt; {</span>
+<span class="fc" id="L98">			Runnable runnableTask = () -&gt; {</span>
+
+<span class="fc" id="L100">				calculateRewards(user);</span>
+<span class="fc" id="L101">			};</span>
+<span class="fc" id="L102">			rewardsExecutorService.submit(runnableTask);</span>
+<span class="fc" id="L103">		});</span>
+
+<span class="fc" id="L105">		rewardsExecutorService.shutdown();</span>
+
+		try {
+<span class="fc" id="L108">			boolean executorHasFinished = rewardsExecutorService.awaitTermination(20, TimeUnit.MINUTES);</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">			if (!executorHasFinished) {</span>
+<span class="nc" id="L110">				logger.error(&quot;calculateRewards does not finish in 20 minutes elapsed time&quot;);</span>
+<span class="nc" id="L111">				rewardsExecutorService.shutdownNow();</span>
+			} else {
+<span class="fc" id="L113">				logger.debug(&quot;calculateRewards finished before the 20 minutes elapsed time&quot;);</span>
+			}
+<span class="nc" id="L115">		} catch (InterruptedException interruptedException) {</span>
+<span class="nc" id="L116">			logger.error(&quot;executorService was interrupted : &quot; + interruptedException.getLocalizedMessage());</span>
+<span class="nc" id="L117">			rewardsExecutorService.shutdownNow();</span>
+<span class="fc" id="L118">		}</span>
+<span class="fc" id="L119">	}</span>
+
+	/**
+	 * Check if a given location is in Attraction Proximity
+	 *
+	 * @param attractionTourGuide attraction
+	 * @param locationTourGuide   location
+	 * @return true if location is in Attraction Proximity, false otherwise
+	 */
+	public boolean isWithinAttractionProximity(AttractionTourGuide attractionTourGuide, LocationTourGuide locationTourGuide) {
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		return (getDistance(attractionTourGuide, locationTourGuide) &lt;= ATTRACTION_PROXIMITY_RANGE);</span>
+	}
+
+	private boolean nearAttraction(VisitedLocationTourGuide visitedLocationTourGuide, AttractionTourGuide attractionTourGuide) {
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		return (getDistance(attractionTourGuide, visitedLocationTourGuide.getLocationTourGuide()) &lt;= proximityBuffer);</span>
+	}
+
+	/**
+	 * Return rewardsPoints when user visited an attraction
+	 *
+	 * @param attractionTourGuide attraction
+	 * @param userId              userId
+	 * @return number of rewards points
+	 */
+	public int getRewardPoints(AttractionTourGuide attractionTourGuide, UUID userId) {
+<span class="fc" id="L144">		return rewardCentralService.getAttractionRewardPoints(attractionTourGuide.getAttractionId(), userId);</span>
+	}
+
+	/**
+	 * Calculate distance between two locations
+	 *
+	 * @param loc1 location 1
+	 * @param loc2 location 2
+	 * @return distance between location
+	 */
+	public double getDistance(LocationTourGuide loc1, LocationTourGuide loc2) {
+<span class="fc" id="L155">		double lat1 = Math.toRadians(loc1.getLatitude());</span>
+<span class="fc" id="L156">		double lon1 = Math.toRadians(loc1.getLongitude());</span>
+<span class="fc" id="L157">		double lat2 = Math.toRadians(loc2.getLatitude());</span>
+<span class="fc" id="L158">		double lon2 = Math.toRadians(loc2.getLongitude());</span>
+
+<span class="fc" id="L160">		double angle = Math.acos(Math.sin(lat1) * Math.sin(lat2)</span>
+<span class="fc" id="L161">				+ Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));</span>
+
+<span class="fc" id="L163">		double nauticalMiles = 60 * Math.toDegrees(angle);</span>
+<span class="fc" id="L164">		return STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
