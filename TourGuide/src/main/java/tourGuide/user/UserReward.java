@@ -1,30 +1,25 @@
 package tourGuide.user;
 
-import gpsUtil.location.Attraction;
-import gpsUtil.location.VisitedLocation;
+import lombok.Data;
+import tourGuide.model.AttractionTourGuide;
+import tourGuide.model.VisitedLocationTourGuide;
 
+@Data
 public class UserReward {
 
-	public final VisitedLocation visitedLocation;
-	public final Attraction attraction;
+	private VisitedLocationTourGuide visitedLocationTourGuide;
+	private AttractionTourGuide attractionTourGuide;
 	private int rewardPoints;
-	public UserReward(VisitedLocation visitedLocation, Attraction attraction, int rewardPoints) {
-		this.visitedLocation = visitedLocation;
-		this.attraction = attraction;
+
+	public UserReward(VisitedLocationTourGuide visitedLocationTourGuide, AttractionTourGuide attractionTourGuide, int rewardPoints) {
+		this.visitedLocationTourGuide = visitedLocationTourGuide;
+		this.attractionTourGuide = attractionTourGuide;
 		this.rewardPoints = rewardPoints;
-	}
-	
-	public UserReward(VisitedLocation visitedLocation, Attraction attraction) {
-		this.visitedLocation = visitedLocation;
-		this.attraction = attraction;
 	}
 
-	public void setRewardPoints(int rewardPoints) {
-		this.rewardPoints = rewardPoints;
+	public UserReward(VisitedLocationTourGuide visitedLocationTourGuide, AttractionTourGuide attractionTourGuide) {
+		this.visitedLocationTourGuide = visitedLocationTourGuide;
+		this.attractionTourGuide = attractionTourGuide;
 	}
-	
-	public int getRewardPoints() {
-		return rewardPoints;
-	}
-	
+
 }
