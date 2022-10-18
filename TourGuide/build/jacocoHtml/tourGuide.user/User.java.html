@@ -71,7 +71,7 @@ public class User {
 <span class="nc" id="L71">	}</span>
 
 	public void addUserReward(UserReward userReward) {
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (userRewards.stream().noneMatch(r -&gt; r.getAttractionTourGuide().getAttractionName().equals(userReward.getAttractionTourGuide().getAttractionName()))) {</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (userRewards.stream().noneMatch(r -&gt; r.getAttractionTourGuide().getAttractionName().equals(userReward.getAttractionTourGuide().getAttractionName()))) {</span>
 <span class="fc" id="L75">			userRewards.add(userReward);</span>
 		}
 <span class="fc" id="L77">	}</span>
@@ -93,12 +93,12 @@ public class User {
 	}
 
 	public void setTripDeals(List&lt;Provider&gt; tripDeals) {
-<span class="nc" id="L96">		this.tripDeals = tripDeals;</span>
-<span class="nc" id="L97">	}</span>
+<span class="fc" id="L96">		this.tripDeals = tripDeals;</span>
+<span class="fc" id="L97">	}</span>
 
 	public List&lt;Provider&gt; getTripDeals() {
 <span class="fc" id="L100">		return tripDeals;</span>
 	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

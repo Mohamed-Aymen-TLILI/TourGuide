@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tourGuide.service.GpsUtilServiceWebClientTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-10-18T08:20:43" hostname="MBP-de-TLILI.lan" time="0.049">
+  <properties/>
+  <testcase name="getAllAttractions()" classname="tourGuide.service.GpsUtilServiceWebClientTests" time="0.038"/>
+  <testcase name="getUserLocationTest()" classname="tourGuide.service.GpsUtilServiceWebClientTests" time="0.009"/>
+  <system-out><![CDATA[2022-10-18 10:20:43.851  INFO 23365 --- [WebServer 63744] okhttp3.mockwebserver.MockWebServer      : MockWebServer[63744] starting to accept connections
+2022-10-18 10:20:43.866  INFO 23365 --- [127.0.0.1:63745] okhttp3.mockwebserver.MockWebServer      : MockWebServer[63744] received request: GET /attractions HTTP/1.1 and responded: HTTP/1.1 200 OK
+2022-10-18 10:20:43.899  INFO 23365 --- [127.0.0.1:63745] okhttp3.mockwebserver.MockWebServer      : MockWebServer[63744] received request: GET /userLocation?userId=eb7a0365-a3bf-424c-996d-cffbfc7c4e96 HTTP/1.1 and responded: HTTP/1.1 200 OK
+2022-10-18 10:20:43.902  INFO 23365 --- [WebServer 63744] okhttp3.mockwebserver.MockWebServer      : MockWebServer[63744] done accepting connections: Socket closed
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

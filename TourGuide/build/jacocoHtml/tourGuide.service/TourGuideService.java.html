@@ -83,10 +83,10 @@ public class TourGuideService {
 	 * @return last user visited location
 	 */
 	public VisitedLocationTourGuide getUserLocation(String username) {
-<span class="nc" id="L86">		User user = this.getUser(username);</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		return (!user.getVisitedLocations().isEmpty()) ?</span>
-<span class="nc" id="L88">				user.getLastVisitedLocation() :</span>
-<span class="nc" id="L89">				trackUserLocation(user);</span>
+<span class="fc" id="L86">		User user = this.getUser(username);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		return (!user.getVisitedLocations().isEmpty()) ?</span>
+<span class="fc" id="L88">				user.getLastVisitedLocation() :</span>
+<span class="fc" id="L89">				trackUserLocation(user);</span>
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class TourGuideService {
 	 * @return user
 	 */
 	public User getUser(String userName) {
-<span class="nc" id="L99">		return internalUserMap.get(userName);</span>
+<span class="fc" id="L99">		return internalUserMap.get(userName);</span>
 	}
 
 	/**
@@ -114,10 +114,10 @@ public class TourGuideService {
 	 * @param user user to add
 	 */
 	public void addUser(User user) {
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (!internalUserMap.containsKey(user.getUserName())) {</span>
-<span class="nc" id="L118">			internalUserMap.put(user.getUserName(), user);</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (!internalUserMap.containsKey(user.getUserName())) {</span>
+<span class="fc" id="L118">			internalUserMap.put(user.getUserName(), user);</span>
 		}
-<span class="nc" id="L120">	}</span>
+<span class="fc" id="L120">	}</span>
 
 	/**
 	 * set UserPreferences to given user
@@ -145,14 +145,14 @@ public class TourGuideService {
 	 */
 	public List&lt;Provider&gt; getTripDeals(String username) {
 
-<span class="nc" id="L148">		User user = this.getUser(username);</span>
+<span class="fc" id="L148">		User user = this.getUser(username);</span>
 
-<span class="nc" id="L150">		int cumulativeRewardPoints = user.getUserRewards().stream().mapToInt(UserReward::getRewardPoints).sum();</span>
+<span class="fc" id="L150">		int cumulativeRewardPoints = user.getUserRewards().stream().mapToInt(UserReward::getRewardPoints).sum();</span>
 
-<span class="nc" id="L152">		List&lt;Provider&gt; providers = tripPricerService.getPrice(TRIP_PRICER_API_KEY, user.getUserId(), user.getUserPreferences().getNumberOfAdults(),</span>
-<span class="nc" id="L153">				user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(), cumulativeRewardPoints);</span>
-<span class="nc" id="L154">		user.setTripDeals(providers);</span>
-<span class="nc" id="L155">		return providers;</span>
+<span class="fc" id="L152">		List&lt;Provider&gt; providers = tripPricerService.getPrice(TRIP_PRICER_API_KEY, user.getUserId(), user.getUserPreferences().getNumberOfAdults(),</span>
+<span class="fc" id="L153">				user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(), cumulativeRewardPoints);</span>
+<span class="fc" id="L154">		user.setTripDeals(providers);</span>
+<span class="fc" id="L155">		return providers;</span>
 
 	}
 
@@ -166,7 +166,7 @@ public class TourGuideService {
 
 <span class="fc" id="L167">		VisitedLocationTourGuide visitedLocationTourGuide = gpsUtilService.getUserLocation(user.getUserId());</span>
 
-<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (visitedLocationTourGuide != null) {</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (visitedLocationTourGuide != null) {</span>
 <span class="fc" id="L170">			user.addToVisitedLocations(visitedLocationTourGuide);</span>
 <span class="fc" id="L171">			rewardsService.calculateRewards(user);</span>
 		}
@@ -213,23 +213,23 @@ public class TourGuideService {
 	 * @return top 5 attractions nearest to user last visited location
 	 */
 	public NearbyAttractionDto getNearByAttractions(VisitedLocationTourGuide visitedLocationTourGuide) {
-<span class="nc" id="L216">		List&lt;AttractionClosestDto&gt; attractionClosestDtoList = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L217">		List&lt;AttractionTourGuide&gt; attractionTourGuideList = gpsUtilService.getAttractions();</span>
-<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (attractionTourGuideList!=null) {</span>
-<span class="nc" id="L219">			attractionTourGuideList.stream().forEach(attraction -&gt;</span>
+<span class="fc" id="L216">		List&lt;AttractionClosestDto&gt; attractionClosestDtoList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L217">		List&lt;AttractionTourGuide&gt; attractionTourGuideList = gpsUtilService.getAttractions();</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		if (attractionTourGuideList!=null) {</span>
+<span class="fc" id="L219">			attractionTourGuideList.stream().forEach(attraction -&gt;</span>
 					{
-<span class="nc" id="L221">						AttractionClosestDto attractionClosestDto = new AttractionClosestDto(attraction.getAttractionName(), attraction,</span>
-<span class="nc" id="L222">								rewardsService.getDistance(attraction, visitedLocationTourGuide.getLocationTourGuide()), rewardsService.getRewardPoints(attraction, visitedLocationTourGuide.getUserId()));</span>
-<span class="nc" id="L223">						attractionClosestDtoList.add(attractionClosestDto);</span>
+<span class="fc" id="L221">						AttractionClosestDto attractionClosestDto = new AttractionClosestDto(attraction.getAttractionName(), attraction,</span>
+<span class="fc" id="L222">								rewardsService.getDistance(attraction, visitedLocationTourGuide.getLocationTourGuide()), rewardsService.getRewardPoints(attraction, visitedLocationTourGuide.getUserId()));</span>
+<span class="fc" id="L223">						attractionClosestDtoList.add(attractionClosestDto);</span>
 
-<span class="nc" id="L225">					}</span>
+<span class="fc" id="L225">					}</span>
 			);
 
-<span class="nc" id="L228">			NearbyAttractionDto nearbyAttractionDto = new NearbyAttractionDto();</span>
-<span class="nc" id="L229">			nearbyAttractionDto.setUserLocationTourGuide(visitedLocationTourGuide.getLocationTourGuide());</span>
-<span class="nc" id="L230">			nearbyAttractionDto.setClosestAttractionsList(attractionClosestDtoList.stream().sorted(Comparator.comparingDouble(AttractionClosestDto::getDistanceUserToAttraction)).limit(5).collect(Collectors.toList()));</span>
+<span class="fc" id="L228">			NearbyAttractionDto nearbyAttractionDto = new NearbyAttractionDto();</span>
+<span class="fc" id="L229">			nearbyAttractionDto.setUserLocationTourGuide(visitedLocationTourGuide.getLocationTourGuide());</span>
+<span class="fc" id="L230">			nearbyAttractionDto.setClosestAttractionsList(attractionClosestDtoList.stream().sorted(Comparator.comparingDouble(AttractionClosestDto::getDistanceUserToAttraction)).limit(5).collect(Collectors.toList()));</span>
 
-<span class="nc" id="L232">			return nearbyAttractionDto;</span>
+<span class="fc" id="L232">			return nearbyAttractionDto;</span>
 		}
 		else
 		{
@@ -243,14 +243,14 @@ public class TourGuideService {
 	 * @return list of all user's last visited location
 	 */
 	public List&lt;UserCurrentLocationDto&gt; getAllUsersCurrentLocation() {
-<span class="nc" id="L246">		List&lt;User&gt; userList = this.getAllUsers();</span>
+<span class="fc" id="L246">		List&lt;User&gt; userList = this.getAllUsers();</span>
 
-<span class="nc" id="L248">		List&lt;UserCurrentLocationDto&gt; userCurrentLocationDtoList = new CopyOnWriteArrayList&lt;&gt;();</span>
-<span class="nc" id="L249">		userList.stream().forEach(user -&gt; {</span>
+<span class="fc" id="L248">		List&lt;UserCurrentLocationDto&gt; userCurrentLocationDtoList = new CopyOnWriteArrayList&lt;&gt;();</span>
+<span class="fc" id="L249">		userList.stream().forEach(user -&gt; {</span>
 <span class="nc" id="L250">			userCurrentLocationDtoList.add(new UserCurrentLocationDto(user.getUserId().toString(), user.getLastVisitedLocation().getLocationTourGuide()));</span>
 <span class="nc" id="L251">		});</span>
 
-<span class="nc" id="L253">		return userCurrentLocationDtoList;</span>
+<span class="fc" id="L253">		return userCurrentLocationDtoList;</span>
 	}
 
 	private void addShutDownHook() {
@@ -261,4 +261,4 @@ public class TourGuideService {
 		});
 <span class="fc" id="L262">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -50,8 +50,8 @@ public class RewardsService {
 	 * @param proximityBuffer proximity Buffer to set
 	 */
 	public void setProximityBuffer(int proximityBuffer) {
-<span class="nc" id="L53">		this.proximityBuffer = proximityBuffer;</span>
-<span class="nc" id="L54">	}</span>
+<span class="fc" id="L53">		this.proximityBuffer = proximityBuffer;</span>
+<span class="fc" id="L54">	}</span>
 
 	/**
 	 * Method to set Proximity Buffer to default value
@@ -126,7 +126,7 @@ public class RewardsService {
 	 * @return true if location is in Attraction Proximity, false otherwise
 	 */
 	public boolean isWithinAttractionProximity(AttractionTourGuide attractionTourGuide, LocationTourGuide locationTourGuide) {
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		return (getDistance(attractionTourGuide, locationTourGuide) &lt;= ATTRACTION_PROXIMITY_RANGE);</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		return (getDistance(attractionTourGuide, locationTourGuide) &lt;= ATTRACTION_PROXIMITY_RANGE);</span>
 	}
 
 	private boolean nearAttraction(VisitedLocationTourGuide visitedLocationTourGuide, AttractionTourGuide attractionTourGuide) {
@@ -165,4 +165,4 @@ public class RewardsService {
 	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

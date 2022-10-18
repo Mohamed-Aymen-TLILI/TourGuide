@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tourGuide.TripPricerServiceWebClientTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-10-18T08:20:43" hostname="MBP-de-TLILI.lan" time="0.048">
+  <properties/>
+  <testcase name="getPriceTest()" classname="tourGuide.TripPricerServiceWebClientTests" time="0.033"/>
+  <testcase name="getProviderName()" classname="tourGuide.TripPricerServiceWebClientTests" time="0.011"/>
+  <system-out><![CDATA[2022-10-18 10:20:43.798  INFO 23365 --- [WebServer 63742] okhttp3.mockwebserver.MockWebServer      : MockWebServer[63742] starting to accept connections
+2022-10-18 10:20:43.816  INFO 23365 --- [127.0.0.1:63743] okhttp3.mockwebserver.MockWebServer      : MockWebServer[63742] received request: GET /price?apiKey=apiKey&adults=1&children=3&attractionId=0fc0e7e2-759a-41c5-babe-bae63fccc1f5&nightsStay=2&rewardsPoints=10 HTTP/1.1 and responded: HTTP/1.1 200 OK
+2022-10-18 10:20:43.841  INFO 23365 --- [127.0.0.1:63743] okhttp3.mockwebserver.MockWebServer      : MockWebServer[63742] received request: GET /providerName?apiKey=apiKey&adults=20 HTTP/1.1 and responded: HTTP/1.1 200 OK
+2022-10-18 10:20:43.847  INFO 23365 --- [WebServer 63742] okhttp3.mockwebserver.MockWebServer      : MockWebServer[63742] done accepting connections: Socket closed
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

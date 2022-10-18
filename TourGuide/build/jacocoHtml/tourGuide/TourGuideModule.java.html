@@ -13,44 +13,44 @@ import tourGuide.service.TourGuideService;
 import tourGuide.service.tripPricer.TripPricerServiceRestTemplate;
 
 @Configuration
-<span class="nc" id="L16">public class TourGuideModule {</span>
+<span class="fc" id="L16">public class TourGuideModule {</span>
 
 	@Bean
 	public InitializationService getInitializationService()
 	{
-<span class="nc" id="L21">		return new InitializationService();</span>
+<span class="fc" id="L21">		return new InitializationService();</span>
 	}
 
 
 	@Bean
 	public ITripPricerService getTripPricerService()
 	{
-<span class="nc" id="L28">		return  new TripPricerServiceRestTemplate();</span>
+<span class="fc" id="L28">		return  new TripPricerServiceRestTemplate();</span>
 	}
 
 	@Bean
 	public IGpsUtilService getGpsUtilService() {
-<span class="nc" id="L33">		return new GpsUtilServiceRestTemplate();</span>
+<span class="fc" id="L33">		return new GpsUtilServiceRestTemplate();</span>
 	}
 
 	@Bean
 	public IRewardCentralService getRewardCentralService() {
-<span class="nc" id="L38">		return new RewardCentralServiceRestTemplate();</span>
+<span class="fc" id="L38">		return new RewardCentralServiceRestTemplate();</span>
 	}
 
 
 	@Bean
 	public RewardsService getRewardsService() {
-<span class="nc" id="L44">		return new RewardsService(getGpsUtilService(), getRewardCentralService());</span>
+<span class="fc" id="L44">		return new RewardsService(getGpsUtilService(), getRewardCentralService());</span>
 	}
 
 
 	@Bean
 	public TourGuideService getTourGuideService()
 	{
-<span class="nc" id="L51">		return new TourGuideService(getGpsUtilService(),getRewardsService(), getTripPricerService(), getInitializationService());</span>
+<span class="fc" id="L51">		return new TourGuideService(getGpsUtilService(),getRewardsService(), getTripPricerService(), getInitializationService());</span>
 	}
 
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

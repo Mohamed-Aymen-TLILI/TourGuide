@@ -15,7 +15,7 @@ import java.util.UUID;
  * GpsUtil Service class
  */
 public class GpsUtilServiceWebClient implements IGpsUtilService {
-<span class="nc" id="L18">    private final Logger logger = LoggerFactory.getLogger(GpsUtilServiceWebClient.class);</span>
+<span class="fc" id="L18">    private final Logger logger = LoggerFactory.getLogger(GpsUtilServiceWebClient.class);</span>
 
     public static final String attractionsEndpoint = &quot;/attractions&quot;;
 
@@ -37,11 +37,11 @@ public class GpsUtilServiceWebClient implements IGpsUtilService {
      * @param gpsUtilRootUrl rootUrl for gpsUtil api
      */
     public GpsUtilServiceWebClient(String gpsUtilRootUrl)
-<span class="nc" id="L40">    {</span>
-<span class="nc" id="L41">        webClient = WebClient.builder().baseUrl(gpsUtilRootUrl).</span>
-<span class="nc" id="L42">                defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).</span>
-<span class="nc" id="L43">                build();</span>
-<span class="nc" id="L44">    }</span>
+<span class="fc" id="L40">    {</span>
+<span class="fc" id="L41">        webClient = WebClient.builder().baseUrl(gpsUtilRootUrl).</span>
+<span class="fc" id="L42">                defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).</span>
+<span class="fc" id="L43">                build();</span>
+<span class="fc" id="L44">    }</span>
 
     /**
      * getUserLocation for a given user
@@ -50,10 +50,10 @@ public class GpsUtilServiceWebClient implements IGpsUtilService {
      */
     public VisitedLocationTourGuide getUserLocation(UUID userId)
     {
-<span class="nc" id="L53">        logger.debug(&quot;Call to gpsUtilService.getUserLocation(&quot; + userId + &quot;)&quot;);</span>
-<span class="nc" id="L54">        return webClient.get().uri(uriBuilder -&gt;</span>
-<span class="nc" id="L55">                uriBuilder.path(userLocationEndpoint).</span>
-<span class="nc" id="L56">                        queryParam(&quot;userId&quot;,userId.toString()).build()).retrieve().bodyToMono(VisitedLocationTourGuide.class).block();</span>
+<span class="fc" id="L53">        logger.debug(&quot;Call to gpsUtilService.getUserLocation(&quot; + userId + &quot;)&quot;);</span>
+<span class="fc" id="L54">        return webClient.get().uri(uriBuilder -&gt;</span>
+<span class="fc" id="L55">                uriBuilder.path(userLocationEndpoint).</span>
+<span class="fc" id="L56">                        queryParam(&quot;userId&quot;,userId.toString()).build()).retrieve().bodyToMono(VisitedLocationTourGuide.class).block();</span>
     }
 
     /**
@@ -62,12 +62,12 @@ public class GpsUtilServiceWebClient implements IGpsUtilService {
      */
     public List&lt;AttractionTourGuide&gt; getAttractions()
     {
-<span class="nc" id="L65">        logger.debug(&quot;Call to gpsUtilService.getAttractions()&quot;);</span>
+<span class="fc" id="L65">        logger.debug(&quot;Call to gpsUtilService.getAttractions()&quot;);</span>
 
-<span class="nc" id="L67">        return webClient.get().uri(uriBuilder -&gt;</span>
-<span class="nc" id="L68">                uriBuilder.path(attractionsEndpoint).build()).retrieve().</span>
-<span class="nc" id="L69">                bodyToFlux(AttractionTourGuide.class).collectList().block();</span>
+<span class="fc" id="L67">        return webClient.get().uri(uriBuilder -&gt;</span>
+<span class="fc" id="L68">                uriBuilder.path(attractionsEndpoint).build()).retrieve().</span>
+<span class="fc" id="L69">                bodyToFlux(AttractionTourGuide.class).collectList().block();</span>
 
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

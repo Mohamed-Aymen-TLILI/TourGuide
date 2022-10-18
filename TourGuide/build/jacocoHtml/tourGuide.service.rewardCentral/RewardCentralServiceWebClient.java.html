@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 public class RewardCentralServiceWebClient implements IRewardCentralService {
-<span class="nc" id="L13">    private final Logger logger = LoggerFactory.getLogger(RewardCentralServiceWebClient.class);</span>
+<span class="fc" id="L13">    private final Logger logger = LoggerFactory.getLogger(RewardCentralServiceWebClient.class);</span>
 
     public static final String attractionsRewardsEndpoint = &quot;/rewardsPoints&quot;;
 
@@ -25,11 +25,11 @@ public class RewardCentralServiceWebClient implements IRewardCentralService {
 <span class="nc" id="L25">    }</span>
 
     public RewardCentralServiceWebClient(String rewardsCentralRootUrl)
-<span class="nc" id="L28">    {</span>
-<span class="nc" id="L29">        webClient = WebClient.builder().baseUrl(rewardsCentralRootUrl).</span>
-<span class="nc" id="L30">                defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).</span>
-<span class="nc" id="L31">                build();</span>
-<span class="nc" id="L32">    }</span>
+<span class="fc" id="L28">    {</span>
+<span class="fc" id="L29">        webClient = WebClient.builder().baseUrl(rewardsCentralRootUrl).</span>
+<span class="fc" id="L30">                defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).</span>
+<span class="fc" id="L31">                build();</span>
+<span class="fc" id="L32">    }</span>
 
     /**
      * Get rewards Points for a user visiting an attraction
@@ -39,16 +39,16 @@ public class RewardCentralServiceWebClient implements IRewardCentralService {
      */
     public int getAttractionRewardPoints(UUID attractionId, UUID userId)
     {
-<span class="nc" id="L42">        logger.debug(&quot;Call to rewardCentral.getAttractionRewardPoints(&quot;+ attractionId + &quot;,&quot; + userId+ &quot;)&quot;);</span>
+<span class="fc" id="L42">        logger.debug(&quot;Call to rewardCentral.getAttractionRewardPoints(&quot;+ attractionId + &quot;,&quot; + userId+ &quot;)&quot;);</span>
 
-<span class="nc" id="L44">        Mono&lt;Integer&gt; integerMono = webClient.get().uri(uriBuilder -&gt;</span>
-<span class="nc" id="L45">                uriBuilder.path(attractionsRewardsEndpoint).</span>
-<span class="nc" id="L46">                        queryParam(&quot;attractionId&quot;,attractionId.toString()).</span>
-<span class="nc" id="L47">                        queryParam(&quot;userId&quot;,userId.toString()).build()).retrieve().bodyToMono(Integer.class);</span>
+<span class="fc" id="L44">        Mono&lt;Integer&gt; integerMono = webClient.get().uri(uriBuilder -&gt;</span>
+<span class="fc" id="L45">                uriBuilder.path(attractionsRewardsEndpoint).</span>
+<span class="fc" id="L46">                        queryParam(&quot;attractionId&quot;,attractionId.toString()).</span>
+<span class="fc" id="L47">                        queryParam(&quot;userId&quot;,userId.toString()).build()).retrieve().bodyToMono(Integer.class);</span>
 
 
-<span class="nc" id="L50">        return integerMono.blockOptional().orElse(Integer.MIN_VALUE);</span>
+<span class="fc" id="L50">        return integerMono.blockOptional().orElse(Integer.MIN_VALUE);</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

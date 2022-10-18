@@ -16,7 +16,7 @@ import java.util.UUID;
  */
 public class TripPricerServiceWebClient implements ITripPricerService {
 
-<span class="nc" id="L19">    private final Logger logger = LoggerFactory.getLogger(TripPricerServiceWebClient.class);</span>
+<span class="fc" id="L19">    private final Logger logger = LoggerFactory.getLogger(TripPricerServiceWebClient.class);</span>
 
     public static final String priceEndpoint = &quot;/price&quot;;
 
@@ -33,11 +33,11 @@ public class TripPricerServiceWebClient implements ITripPricerService {
 <span class="nc" id="L33">    }</span>
 
     public TripPricerServiceWebClient(String tripPricerRootUrl)
-<span class="nc" id="L36">    {</span>
-<span class="nc" id="L37">        webClient = WebClient.builder().baseUrl(tripPricerRootUrl).</span>
-<span class="nc" id="L38">                defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).</span>
-<span class="nc" id="L39">                build();</span>
-<span class="nc" id="L40">    }</span>
+<span class="fc" id="L36">    {</span>
+<span class="fc" id="L37">        webClient = WebClient.builder().baseUrl(tripPricerRootUrl).</span>
+<span class="fc" id="L38">                defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).</span>
+<span class="fc" id="L39">                build();</span>
+<span class="fc" id="L40">    }</span>
 
     /**
      * get provider list of trips with calculated price for given parameters
@@ -51,16 +51,16 @@ public class TripPricerServiceWebClient implements ITripPricerService {
      */
     public List&lt;Provider&gt; getPrice(String apiKey, UUID attractionId, int adults, int children, int nightsStay, int rewardsPoints)
     {
-<span class="nc" id="L54">        logger.debug(&quot;Call to tripPricer.getPrice&quot;);</span>
+<span class="fc" id="L54">        logger.debug(&quot;Call to tripPricer.getPrice&quot;);</span>
 
-<span class="nc" id="L56">        return  webClient.method(HttpMethod.GET).uri(uriBuilder -&gt;</span>
-<span class="nc" id="L57">                uriBuilder.path(priceEndpoint).queryParam(&quot;apiKey&quot;,apiKey)</span>
-<span class="nc" id="L58">                        .queryParam(&quot;adults&quot;,adults)</span>
-<span class="nc" id="L59">                        .queryParam(&quot;children&quot;,children)</span>
-<span class="nc" id="L60">                        .queryParam(&quot;attractionId&quot;,attractionId)</span>
-<span class="nc" id="L61">                        .queryParam(&quot;nightsStay&quot;, nightsStay)</span>
-<span class="nc" id="L62">                        .queryParam(&quot;rewardsPoints&quot;,rewardsPoints)</span>
-<span class="nc" id="L63">                        .build()).retrieve().bodyToFlux(Provider.class).collectList().block();</span>
+<span class="fc" id="L56">        return  webClient.method(HttpMethod.GET).uri(uriBuilder -&gt;</span>
+<span class="fc" id="L57">                uriBuilder.path(priceEndpoint).queryParam(&quot;apiKey&quot;,apiKey)</span>
+<span class="fc" id="L58">                        .queryParam(&quot;adults&quot;,adults)</span>
+<span class="fc" id="L59">                        .queryParam(&quot;children&quot;,children)</span>
+<span class="fc" id="L60">                        .queryParam(&quot;attractionId&quot;,attractionId)</span>
+<span class="fc" id="L61">                        .queryParam(&quot;nightsStay&quot;, nightsStay)</span>
+<span class="fc" id="L62">                        .queryParam(&quot;rewardsPoints&quot;,rewardsPoints)</span>
+<span class="fc" id="L63">                        .build()).retrieve().bodyToFlux(Provider.class).collectList().block();</span>
     }
 
     /**
@@ -71,12 +71,12 @@ public class TripPricerServiceWebClient implements ITripPricerService {
      */
     public String getProviderName(String apiKey, int adults)
     {
-<span class="nc" id="L74">        logger.debug(&quot;Call to tripPricer.getProviderName&quot;);</span>
-<span class="nc" id="L75">        return webClient.get().uri(uriBuilder -&gt;</span>
-<span class="nc" id="L76">                uriBuilder.path(providerNameEndpoint).</span>
-<span class="nc" id="L77">                        queryParam(&quot;apiKey&quot;,apiKey).</span>
-<span class="nc" id="L78">                        queryParam(&quot;adults&quot;,adults).build()).retrieve().bodyToMono(String.class).block();</span>
+<span class="fc" id="L74">        logger.debug(&quot;Call to tripPricer.getProviderName&quot;);</span>
+<span class="fc" id="L75">        return webClient.get().uri(uriBuilder -&gt;</span>
+<span class="fc" id="L76">                uriBuilder.path(providerNameEndpoint).</span>
+<span class="fc" id="L77">                        queryParam(&quot;apiKey&quot;,apiKey).</span>
+<span class="fc" id="L78">                        queryParam(&quot;adults&quot;,adults).build()).retrieve().bodyToMono(String.class).block();</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
